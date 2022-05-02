@@ -14,20 +14,27 @@ private int _level;
         AtomicInteger num = new AtomicInteger(2);
         new Thread(()->{
             while(true){
+                while(_obstacles.getX()<=this.getWidth()-_obstacles.WIDTH){
+                    try{
 
-                try{
-                    if(_obstacles.getX>= _obstacles.MAX_LOCATE){
-                    num.set(1);
-                }
-                    if(_obstacles.getX<= _obstacles.MIN_LOCATE){
-                        num.set(2);
+                                _obstacles.moveRight();
+                                repaint();
+                            Thread.sleep(10);
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
-                    _obstacles.move((int) num.get());
-                    repaint();
-                    Thread.sleep(10);
-                }catch (Exception e){
-                    e.printStackTrace();
+                }while(_obstacles.getX()>=0){
+                    try{
+
+                        _obstacles.moveLeft();
+                        repaint();
+
+                        Thread.sleep(10);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
                 }
+
             }
         }).start();
         JButton gun = new JButton(new ImageIcon("icons/gun.jpg"));
