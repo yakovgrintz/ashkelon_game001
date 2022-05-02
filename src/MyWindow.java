@@ -1,9 +1,8 @@
 import javax.swing.*;
-public class MyWindow extends JFrame{
-    public static final  int WIDTH=1000,HEIGHT=500;
+public class MyWindow extends JFrame implements MyPanels{
     public MyWindow(){
 
-            this.setSize( WIDTH, HEIGHT);
+            this.setSize( MyPanels.WIDTH, MyPanels.HIGH);
             this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             this.setResizable(false);
             this.setLocationRelativeTo(null);

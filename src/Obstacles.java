@@ -2,7 +2,8 @@ import java.util.Random;
 import java.awt.*;
 
 public class Obstacles {
-    public int getX;
+
+
     private int _x;
     private int _y;
     public final int MAXHEIGHT = 400,MINHEIGHT =100;
@@ -46,6 +47,9 @@ public void move(int num){
     }
     public int getX() {
         return _x;
+    }
+    public int getY() {
+        return _y;
     }
 
 
