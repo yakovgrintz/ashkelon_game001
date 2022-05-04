@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 public class NewScene extends JPanel implements MyPanels {
     private newBall[] _ballStack;
     private Obstacles[] _obstacles;
@@ -12,7 +14,7 @@ public class NewScene extends JPanel implements MyPanels {
     private String part3;
     private Boolean _gameSucces, _isRun;
 
-    public final int numOfBalls = 25, NUM_OF_OBSTACALES = 3;
+    public final int numOfBalls = 25, NUM_OF_OBSTACALES = 3,X_OF_BALL=MyPanels.WIDTH/2,Y_OF_BALL=420;
 
 
     private int _level;
@@ -21,31 +23,33 @@ public class NewScene extends JPanel implements MyPanels {
         _level = level;
         _gameSucces = null;
         _isRun = true;
+        loopGame(_level);
 
         this.setBackground(new Color(15, 238, 215, 255));
         this.setBounds(MyPanels.X, MyPanels.Y, MyPanels.WIDTH, MyPanels.HIGH);
         this.setLayout(null);
-        this.part3 = "/" + level * 25;
+        /*this.part3 = "/" + level * 25;
         this.part2 = "0";
-        _myCounter = new JLabel("" + PART1 + part2 + part3);
+        _myCounter = new JLabel("" + PART1 + part2 + part3);*/
         _myCounter.setBounds(0, 0, MyPanels.WIDTH, 20);
         _myCounter.setFont(new Font("David", Font.BOLD, 20));
         this.add(_myCounter);
 
-        this._obstacles = new Obstacles[_level * NUM_OF_OBSTACALES];
+        /*this._obstacles = new Obstacles[_level * NUM_OF_OBSTACALES];
         for (int i = 0; i < _obstacles.length; i++) {
             _obstacles[i] = new Obstacles();
             moveObstacels(_obstacles[i]);
         }
         this._finishLine = new FinishLine();
-
+*/
         JButton gun = new JButton(new ImageIcon("icons/gun.jpg"));
         gun.setBounds((MyPanels.WIDTH / 2 - gun.getIcon().getIconWidth() / 2), (MyPanels.HIGH - gun.getIcon().getIconHeight() - 50), gun.getIcon().getIconWidth(), gun.getIcon().getIconHeight());
-        this._ballStack = new newBall[_level * numOfBalls];
+        /*this._ballStack = new newBall[_level * numOfBalls];
         for (int i = 0; i < _ballStack.length; i++) {
             _ballStack[i] = new newBall(gun.getX() + gun.getWidth() / 2, gun.getY());
         }
-        AtomicInteger numOfBall = new AtomicInteger();
+        */AtomicInteger numOfBall = new AtomicInteger();
+        numOfBall.set(0);
         gun.addActionListener((event) -> {
 
             try {
@@ -161,6 +165,29 @@ public class NewScene extends JPanel implements MyPanels {
             ball.remove();
             _isRun = false;
             _gameSucces = false;
+            JButton tryAgain=new JButton("try again");
+            /*tryAgain.addActionListener((event) -> {
+
+                try {
+                    _isRun=true;
+
+                    loopGame(_level);
+
+                } catch (Exception e) {
+
+                }
+            });*/
+            /*Object[] option ={tryAgain};
+            JOptionPane.showOptionDialog(new JFrame(),
+                    "Game Over try again",
+                    "game Over",
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    option,
+                    option[0]);*/
+
+
             JOptionPane.showMessageDialog(new JFrame(),
                     "Game Over try again",
                     "game Over",
@@ -170,31 +197,59 @@ public class NewScene extends JPanel implements MyPanels {
                 this.part2) == Integer.parseInt(this.part3.substring(1)) - 1) {
             _isRun = false;
             _gameSucces = true;
-            JOptionPane.showMessageDialog(new JFrame(),
+            JButton nextLevel=new JButton("next Level");
+            /*nextLevel.addActionListener((event) -> {
+
+                try {
+                    _isRun=true;
+                    _level=_level+1;
+                    loopGame(_level);
+
+                } catch (Exception e) {
+
+                }
+            });*/
+            Object[] option ={nextLevel};
+            JOptionPane.showOptionDialog(new JFrame(),
                     "Well done! You succeeded in the game! Go to the next step",
                     "Well done!",
-                    JOptionPane.PLAIN_MESSAGE);
+                    JOptionPane.PLAIN_MESSAGE,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    option,
+                    option[0]);
+
+
 
 
         }
 
     }
-    /*public Boolean getGameSucces() {
-        AtomicBoolean b=null;
-        new Thread(()->{
-            while (true){
-                if (_endGame==true){
-                    b.set(_gameSucces);
-                    break;
-
-                }
-            }
-        }).start();
-
-        return (boolean)b.get();
-    }*/
-
     public Boolean getGameSucces() {
         return _gameSucces;
+    }
+
+    public void loopGame(int level){
+        this.part3 = "/" + level * 25;
+        this.part2 = "0";
+        _myCounter = new JLabel("" + PART1 + part2 + part3);
+        this._obstacles = new Obstacles[_level * NUM_OF_OBSTACALES];
+        for (int i = 0; i < _obstacles.length; i++) {
+            _obstacles[i] = new Obstacles();
+            moveObstacels(_obstacles[i]);
+        }
+        this._finishLine = new FinishLine();
+        this._ballStack = new newBall[_level * numOfBalls];
+        for (int i = 0; i < _ballStack.length; i++) {
+            _ballStack[i] = new newBall(X_OF_BALL, Y_OF_BALL);
+        }
+    }
+
+    public int getLevel() {
+        return _level;
+    }
+
+    public void setIsRun(Boolean isRun) {
+        this._isRun = isRun;
     }
 }//end of class
