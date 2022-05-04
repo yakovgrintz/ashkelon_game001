@@ -46,6 +46,15 @@ public class newBall {
         }
     }
 
+    public boolean checkFinishLine(FinishLine line) {
+        Rectangle ball = new Rectangle(this._x, this._y, WIDTH, HEIGHT);
+        Rectangle lineRect = new Rectangle(new Point(line.X1, line.Y1), new Dimension(line.X2 - line.X1, 1));
+        if (ball.intersects(lineRect)) {
+            return true;
+        }
+        return false;
+    }
+
     public int getX() {
         return this._x;
     }
@@ -59,12 +68,5 @@ public class newBall {
         _y = -100;
     }
 
-    public boolean checkFinishLine(FinishLine line) {
-        Rectangle ball = new Rectangle(this._x, this._y, WIDTH, HEIGHT);
-        Rectangle lineRect = new Rectangle(new Point(line.X1, line.Y1), new Dimension(line.X2 - line.X1, 1));
-        if (ball.intersects(lineRect)) {
-            return true;
-        }
-        return false;
-    }
+
 }

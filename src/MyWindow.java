@@ -15,7 +15,6 @@ public class MyWindow extends JFrame implements MyPanels {
         _panel = new NewScene(_level);
 
         this.add(_panel);
-
         this.setVisible(true);
     }
 
@@ -27,3 +26,6 @@ public class MyWindow extends JFrame implements MyPanels {
 
 
 }
+
+
+

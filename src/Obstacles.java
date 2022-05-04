@@ -1,14 +1,14 @@
 import java.util.Random;
 import java.awt.*;
 
-public class Obstacles {
+public class Obstacles implements MyPanels {
 
 
-    private int _x;
-    private int _y;
-    public final int MAXHEIGHT = 400, MINHEIGHT = 100;
-    public final int MIN_LOCATE = 0, MAX_LOCATE = 380;
+    private int _x, _y;
     public final int WIDTH = 20, HEIGHT = 10;
+    public final int MAXHEIGHT = 400, MINHEIGHT = 100;//height
+    public final int MIN_LOCATE = 0, MAX_LOCATE = MyPanels.WIDTH-WIDTH;//locate
+
 
     public Obstacles() {
         Random r = new Random();
@@ -23,27 +23,6 @@ public class Obstacles {
 
     }
 
-    public boolean checkCollision(newBall ball) {
-        Rectangle obstRect = new Rectangle(_x, _x, WIDTH, HEIGHT);
-        Rectangle ballRect = new Rectangle((int) ball.getX(), (int) ball.getY(), ball.getWIDTH(), ball.getHEIGHT());
-        if (obstRect.intersects(ballRect)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void move(int num) {
-
-        switch (num) {
-            case 1:
-                moveRight();
-                break;
-            case 2:
-                moveLeft();
-                break;
-        }
-    }
 
     public void moveRight() {
         this._x++;

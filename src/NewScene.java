@@ -10,45 +10,28 @@ public class NewScene extends JPanel implements MyPanels {
     private FinishLine _finishLine;
     private JLabel _myCounter;//MYcounterLabel _myCounter;
     public final String PART1 = "your ball :";
-    private String part2;
-    private String part3;
-    private Boolean _gameSucces, _isRun;
-
-    public final int numOfBalls = 25, NUM_OF_OBSTACALES = 3,X_OF_BALL=MyPanels.WIDTH/2,Y_OF_BALL=420;
+    private String part2 ,part3;
+    private Boolean _isRun, _closeWindow;
+    public final int numOfBalls = 25, NUM_OF_OBSTACALES = 3, X_OF_BALL = MyPanels.WIDTH / 2, Y_OF_BALL = 420;
 
 
     private int _level;
 
     public NewScene(int level) {
         _level = level;
-        _gameSucces = null;
         _isRun = true;
+        _closeWindow = false;
         loopGame(_level);
-
         this.setBackground(new Color(15, 238, 215, 255));
         this.setBounds(MyPanels.X, MyPanels.Y, MyPanels.WIDTH, MyPanels.HIGH);
         this.setLayout(null);
-        /*this.part3 = "/" + level * 25;
-        this.part2 = "0";
-        _myCounter = new JLabel("" + PART1 + part2 + part3);*/
         _myCounter.setBounds(0, 0, MyPanels.WIDTH, 20);
         _myCounter.setFont(new Font("David", Font.BOLD, 20));
         this.add(_myCounter);
-
-        /*this._obstacles = new Obstacles[_level * NUM_OF_OBSTACALES];
-        for (int i = 0; i < _obstacles.length; i++) {
-            _obstacles[i] = new Obstacles();
-            moveObstacels(_obstacles[i]);
-        }
-        this._finishLine = new FinishLine();
-*/
         JButton gun = new JButton(new ImageIcon("icons/gun.jpg"));
         gun.setBounds((MyPanels.WIDTH / 2 - gun.getIcon().getIconWidth() / 2), (MyPanels.HIGH - gun.getIcon().getIconHeight() - 50), gun.getIcon().getIconWidth(), gun.getIcon().getIconHeight());
-        /*this._ballStack = new newBall[_level * numOfBalls];
-        for (int i = 0; i < _ballStack.length; i++) {
-            _ballStack[i] = new newBall(gun.getX() + gun.getWidth() / 2, gun.getY());
-        }
-        */AtomicInteger numOfBall = new AtomicInteger();
+
+        AtomicInteger numOfBall = new AtomicInteger();
         numOfBall.set(0);
         gun.addActionListener((event) -> {
 
@@ -164,72 +147,33 @@ public class NewScene extends JPanel implements MyPanels {
             System.out.println("game Over");
             ball.remove();
             _isRun = false;
-            _gameSucces = false;
-            JButton tryAgain=new JButton("try again");
-            /*tryAgain.addActionListener((event) -> {
-
-                try {
-                    _isRun=true;
-
-                    loopGame(_level);
-
-                } catch (Exception e) {
-
-                }
-            });*/
-            /*Object[] option ={tryAgain};
-            JOptionPane.showOptionDialog(new JFrame(),
-                    "Game Over try again",
-                    "game Over",
-                    JOptionPane.PLAIN_MESSAGE,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    option,
-                    option[0]);*/
 
 
             JOptionPane.showMessageDialog(new JFrame(),
-                    "Game Over try again",
+                    "Game Over ",
                     "game Over",
                     JOptionPane.PLAIN_MESSAGE);
+            _closeWindow = true;
+
         }
         if (ball.checkFinishLine(_finishLine) && Integer.parseInt(
                 this.part2) == Integer.parseInt(this.part3.substring(1)) - 1) {
             _isRun = false;
-            _gameSucces = true;
-            JButton nextLevel=new JButton("next Level");
-            /*nextLevel.addActionListener((event) -> {
-
-                try {
-                    _isRun=true;
-                    _level=_level+1;
-                    loopGame(_level);
-
-                } catch (Exception e) {
-
-                }
-            });*/
-            Object[] option ={nextLevel};
-            JOptionPane.showOptionDialog(new JFrame(),
-                    "Well done! You succeeded in the game! Go to the next step",
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "Well done! You succeeded in the game!",
                     "Well done!",
-                    JOptionPane.PLAIN_MESSAGE,
-                    JOptionPane.INFORMATION_MESSAGE,
-                    null,
-                    option,
-                    option[0]);
-
-
-
+                    JOptionPane.PLAIN_MESSAGE);
+            _closeWindow = true;
 
         }
 
     }
-    public Boolean getGameSucces() {
-        return _gameSucces;
+
+    public boolean getCloseWindow() {
+        return _closeWindow;
     }
 
-    public void loopGame(int level){
+    public void loopGame(int level) {
         this.part3 = "/" + level * 25;
         this.part2 = "0";
         _myCounter = new JLabel("" + PART1 + part2 + part3);
@@ -245,11 +189,7 @@ public class NewScene extends JPanel implements MyPanels {
         }
     }
 
-    public int getLevel() {
-        return _level;
-    }
 
-    public void setIsRun(Boolean isRun) {
-        this._isRun = isRun;
-    }
+
+
 }//end of class
